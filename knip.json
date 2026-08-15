@@ -5,6 +5,7 @@
   ],
   "ignoreBinaries": [
     "bwrap",
+    "dsh-desktop-no-such-command",
     "icacls",
     "musl-gcc",
     "python3",
@@ -756,6 +757,16 @@
       "ignoreDependencies": [
         "@deepseek-ai/.+"
       ]
+    },
+    "apps/desktop": {
+      "entry": [
+        "tests/**/*.spec.ts"
+      ],
+      "project": [
+        "src/**/*.ts",
+        "tests/**/*.ts"
+      ],
+      "ignoreExportsUsedInFile": true
     },
     "packages/client/modules": {
       "entry": [

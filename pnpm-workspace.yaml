@@ -38,6 +38,9 @@ peerDependencyRules:
 # default and only allow scripts we need. esbuild (native binary) and lefthook
 # (git hooks) genuinely need theirs.
 allowBuilds:
+  # The desktop shell (apps/desktop) needs the Electron binary its postinstall
+  # downloads; unit tests never touch it, the GUI launch does.
+  electron: true
   esbuild: true
   lefthook: true
   # Cross-platform boundary for the persistent PTY backend, including ConPTY on Windows.
