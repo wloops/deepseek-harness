@@ -27,6 +27,33 @@ pnpm --filter @deepseek-ai/dsh-desktop start
 
 `DSH_DESKTOP_SMOKE=1` 会在窗口首次渲染几秒后退出应用，用于无人值守地验证整条链路。服务器日志以 `[dsh]` 前缀转发到 Electron 主进程控制台。
 
+## 多机工作流
+
+仓库维护两个长期分支：`master` 只用于跟踪上游 `deepseek-ai/deepseek-harness` 仓库的更新，`desktop` 承载本壳的改动，是日常工作分支。在 GitHub 上 fork 上游仓库，把 `desktop` 推送到 fork，然后在每一台需要运行本壳的机器上 clone 该 fork。
+
+单台机器的首次设置：
+
+```sh
+git clone git@github.com:<you>/deepseek-harness.git
+cd deepseek-harness
+git checkout desktop
+pnpm install
+pnpm run build
+pnpm --filter @deepseek-ai/dsh-desktop start
+```
+
+跟随上游更新：
+
+```sh
+git checkout master
+git pull origin master
+git checkout desktop
+git rebase master
+pnpm install && pnpm run build
+```
+
+rebase 后 `pnpm-lock.yaml` 冲突时重新运行 `pnpm install` 解决，绝不手工合并。`pnpm install` 期间 Electron 二进制下载缓慢时，用更长的抓取超时重试（`pnpm install --fetch-timeout 1200000`）。
+
 ## 生命周期
 
 | 事件 | 行为 |
