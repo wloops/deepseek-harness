@@ -27,6 +27,33 @@ pnpm --filter @deepseek-ai/dsh-desktop start
 
 `DSH_DESKTOP_SMOKE=1` quits the app a few seconds after the window's first paint, for automated verification of the whole chain without a human closing the window. Server logs are forwarded to the Electron main process console with a `[dsh]` prefix.
 
+## Multi-machine workflow
+
+The repository keeps two long-lived branches: `master` tracks the upstream `deepseek-ai/deepseek-harness` repository for updates only, and `desktop` carries this shell's changes and is the everyday working branch. Fork the upstream repository on GitHub, push `desktop` to the fork, and clone the fork on every machine that should run the shell.
+
+First-time setup on a machine:
+
+```sh
+git clone git@github.com:<you>/deepseek-harness.git
+cd deepseek-harness
+git checkout desktop
+pnpm install
+pnpm run build
+pnpm --filter @deepseek-ai/dsh-desktop start
+```
+
+Following upstream updates:
+
+```sh
+git checkout master
+git pull origin master
+git checkout desktop
+git rebase master
+pnpm install && pnpm run build
+```
+
+A `pnpm-lock.yaml` conflict after a rebase is resolved by rerunning `pnpm install`, never by hand-merging. A slow Electron binary download during `pnpm install` retries with a longer fetch timeout (`pnpm install --fetch-timeout 1200000`).
+
 ## Lifecycle
 
 | Event | Behavior |
