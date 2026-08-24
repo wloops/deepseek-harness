@@ -8,7 +8,7 @@
 
 Web GUI 不是独立前端。dsh 宿主伺服构建好的 SPA，并在响应 index.html 时注入 `window.__DSH_BOOT__` 启动图；页面通过 `/api` HTTP RPC 与两条 WebSocket 下行流与宿主通信。桌面壳无法单独打包前端，必须运行服务器。
 
-因此壳从仓库根派生 `node --import tsx/esm apps/cli/src/bin.ts web --port 0`（[源码启动契约](../../docs/development.md)），等待服务器在 stdout 打印 `dsh web: http://127.0.0.1:<port>` 就绪行，然后在 Electron 窗口中加载该 URL。环回地址天然通过 `/api` 信任围栏，前后端代码零改动。按 CLI 策略，服务器只绑定环回地址。
+因此壳从仓库根派生 `node --import tsx/esm apps/cli/src/bin.ts web --port 0`（[源码启动契约](../../docs/development.zh.md)），等待服务器在 stdout 打印 `dsh web: http://127.0.0.1:<port>` 就绪行，然后在 Electron 窗口中加载该 URL。环回地址天然通过 `/api` 信任围栏，前后端代码零改动。按 CLI 策略，服务器只绑定环回地址。
 
 ## 运行
 
