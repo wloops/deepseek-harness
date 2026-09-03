@@ -1,7 +1,7 @@
 {
   "name": "@deepseek-ai/dsh-desktop",
   "description": "Electron desktop shell: hosts the DeepSeek Harness Web GUI over a locally spawned dsh web server",
-  "version": "0.1.1-rc.2",
+  "version": "0.1.2-rc.1",
   "publishConfig": {
     "access": "public"
   },
